@@ -1,4 +1,10 @@
 const inquirer = require('inquirer');
+const Manager = require('../lib/Manager');
+const Engineer = require('../lib/Engineer');
+const Intern = require('../lib/Intern');
+const generateHTML = require('./generateHTML');
+
+const teamRoster = [];
 
 // Function to prompt for team manager details
 function promptManager() {
@@ -37,6 +43,7 @@ function promptManager() {
     },
   ]);
 }
+
 
 // Function to prompt for engineer details
 function promptEngineer() {
@@ -114,9 +121,40 @@ function promptIntern() {
   ]);
 }
 
+function promptTeamMembers() {
+  // Prompt user for the type of team member to add
+  inquirer
+    .prompt([
+      {
+        type: 'list',
+        name: 'memberType',
+        message: 'Select the type of team member to add:',
+        choices: ['Engineer', 'Intern', 'Finish building my team'],
+      },
+    ])
+    .then((answer) => {
+      switch (answer.memberType) {
+        case 'Engineer':
+          promptEngineer();
+          break;
+        case 'Intern':
+          promptIntern();
+          break;
+        case 'Finish building my team':
+          generateHTML(teamRoster); // Generate HTML file
+          console.log('Team roster generated successfully!');
+          break;
+        default:
+          console.log('Invalid choice. Please try again.');
+          promptTeamMembers(); // Prompt again if an invalid choice is made
+          break;
+      }
+    });
+}
 
 module.exports = {
   promptManager,
   promptEngineer,
   promptIntern,
+  promptTeamMembers,
 };
