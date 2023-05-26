@@ -12,10 +12,6 @@ function startApp() {
   console.log('Please enter the details for your team members.');
 
   promptManager()
-  .then(() => {
-    // After the manager's information is entered, ask the user to add team members or finish building the team
-    promptTeamMembers();
-  })
   .catch((error) => {
     console.error('An error occurred:', error);
   });

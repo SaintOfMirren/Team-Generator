@@ -41,7 +41,24 @@ function promptManager() {
         return /^\d+$/.test(input) ? true : "Please enter a valid office number (numeric value only).";
       },
     },
-  ]);
+    {
+      type: 'list',
+      name: 'nextAction',
+      message: 'What would you like to do next?',
+      choices: ['Add another member', 'Finish building my team']
+    },
+  ])
+  .then((answer) => {
+    switch (answer.nextAction) {
+      case 'Add another member':
+        promptTeamMembers();
+        break;
+      case 'Finish building my team':
+        generateHTML(teamRoster); // Generate HTML file
+          console.log('Team roster generated successfully!');
+          break;
+    }
+  })
 }
 
 

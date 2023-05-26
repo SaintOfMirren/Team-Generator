@@ -4,12 +4,12 @@ const fs = require('fs');
 const path = require('path');
 
 function generateHTML(teamRoster) {
-    // Create an array to store the HTML for each team member
-    const memberHTML = [];
-  
-    // Loop through the team roster and generate HTML for each member
-    for (const member of teamRoster) {
-      const memberHTMLTemplate = `
+  // Create an array to store the HTML for each team member
+  const memberHTML = [];
+
+  // Loop through the team roster and generate HTML for each member
+  for (const member of teamRoster) {
+    const memberHTMLTemplate = `
         <div class="member">
           <h2>${member.getName()}</h2>
           <p>Employee ID: ${member.getEmployeeId()}</p>
@@ -20,7 +20,29 @@ function generateHTML(teamRoster) {
           ${member.getRole() === 'Intern' ? `<p>School: ${member.getSchool()}</p>` : ''}
         </div>
       `;
-      const outputPath = path.join(__dirname, '.', 'dist', 'team-roster.html'); // Assuming the `dist` folder is at the same level as `src` and `lib` folders.
+
+    memberHTML.push(memberHTMLTemplate);
+  }
+
+  // Generate the final HTML with the team roster
+  const html = `
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Roster</title>
+    <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+    <h1>Team Roster</h1>
+    ${memberHTML.join('')}
+    </body>
+    </html>
+    `;
+  const outputPath = path.join(__dirname, '..', 'dist', 'team-roster.html'); 
+
+  console.log('Output Path:', outputPath);
 
   fs.writeFile(outputPath, html, (error) => {
     if (error) {
@@ -29,29 +51,10 @@ function generateHTML(teamRoster) {
       console.log('Team roster HTML file created:', outputPath);
     }
   });
-  
-      memberHTML.push(memberHTMLTemplate);
-    }
-  
-    // Generate the final HTML with the team roster
-    const html = `
-      <!DOCTYPE html>
-      <html lang="en">
-      <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Team Roster</title>
-        <link rel="stylesheet" href="style.css">
-      </head>
-      <body>
-        <h1>Team Roster</h1>
-        ${memberHTML.join('')}
-      </body>
-      </html>
-    `;
-  
-    return html;
-    
-  }
-  
-  module.exports = generateHTML;
+  console.log('After fs.writeFile');
+
+  return html;
+
+}
+
+module.exports = generateHTML;
