@@ -11,8 +11,14 @@ function startApp() {
   console.log('Welcome to the Team Roster Generator!');
   console.log('Please enter the details for your team members.');
 
-  // Start prompting for team members
-  promptTeamMembers();
+  promptManager()
+  .then(() => {
+    // After the manager's information is entered, ask the user to add team members or finish building the team
+    promptTeamMembers();
+  })
+  .catch((error) => {
+    console.error('An error occurred:', error);
+  });
 }
 
 // Call the startApp function to begin the application

@@ -1,4 +1,8 @@
 // Function to generate the HTML for the team roster
+
+const fs = require('fs');
+const path = require('path');
+
 function generateHTML(teamRoster) {
     // Create an array to store the HTML for each team member
     const memberHTML = [];
@@ -16,6 +20,15 @@ function generateHTML(teamRoster) {
           ${member.getRole() === 'Intern' ? `<p>School: ${member.getSchool()}</p>` : ''}
         </div>
       `;
+      const outputPath = path.join(__dirname, '.', 'dist', 'team-roster.html'); // Assuming the `dist` folder is at the same level as `src` and `lib` folders.
+
+  fs.writeFile(outputPath, html, (error) => {
+    if (error) {
+      console.error('Failed to write HTML file:', error);
+    } else {
+      console.log('Team roster HTML file created:', outputPath);
+    }
+  });
   
       memberHTML.push(memberHTMLTemplate);
     }
@@ -38,6 +51,7 @@ function generateHTML(teamRoster) {
     `;
   
     return html;
+    
   }
   
   module.exports = generateHTML;

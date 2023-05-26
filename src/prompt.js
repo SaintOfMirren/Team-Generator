@@ -80,7 +80,24 @@ function promptEngineer() {
         return input !== '' ? true : "Please enter a valid name.";
       },
     },
-  ]);
+    {
+      type: 'list',
+      name: 'nextAction',
+      message: 'What would you like to do next?',
+      choices: ['Add another member', 'Finish building my team']
+    },
+  ])
+  .then((answer) => {
+    switch (answer.nextAction) {
+      case 'Add another member':
+        promptTeamMembers();
+        break;
+      case 'Finish building my team':
+        generateHTML(teamRoster); // Generate HTML file
+          console.log('Team roster generated successfully!');
+          break;
+    }
+  })
 }
 
 // Function to prompt for intern details
@@ -118,7 +135,24 @@ function promptIntern() {
         return input !== '' ? true : "Please enter a valid name.";
       },
     },
-  ]);
+    {
+      type: 'list',
+      name: 'nextAction',
+      message: 'What would you like to do next?',
+      choices: ['Add another member', 'Finish building my team']
+    },
+  ])
+  .then((answer) => {
+    switch (answer.nextAction) {
+      case 'Add another member':
+        promptTeamMembers();
+        break;
+      case 'Finish building my team':
+        generateHTML(teamRoster); // Generate HTML file
+          console.log('Team roster generated successfully!');
+          break;
+    }
+  })
 }
 
 function promptTeamMembers() {
